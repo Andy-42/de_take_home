@@ -4,10 +4,11 @@ import andy42.de.Gold
 import andy42.de.summary.MineralSummary
 import zio.test.Assertion._
 import zio.test._
+import zio.test.environment.TestEnvironment
 
 object RowDecoderSpec extends DefaultRunnableSpec {
 
-  def spec =
+  def spec: Spec[TestEnvironment, TestFailure[DecodeFailure], TestSuccess] =
     suite("RowDecoder")(
 
       testM("succeeds decoding a valid row")(
