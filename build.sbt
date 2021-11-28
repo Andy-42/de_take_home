@@ -25,9 +25,4 @@ libraryDependencies ++= Seq(
   "dev.zio" %% "zio-test-sbt" % zioVersion % Test
 )
 
-scalacOptions ++= Seq(
-  "-feature",
-  "-deprecation",
-  "-unchecked",
-  "-language:postfixOps"
-)
+Compile / run / mainClass := Some("andy42.de.Mission1")
