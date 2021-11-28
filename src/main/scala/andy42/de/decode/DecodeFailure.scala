@@ -1,23 +1,28 @@
 package andy42.de.decode
 
 import io.circe.Json
+import io.circe.generic.auto._
+import io.circe.syntax._
 
 /**
  * The `DecodeFailure` trait describes all the possible failures in decoding a row (from expeditions.csv).
  * Unifying all the failure to a single type allows the failures to be handled in a uniform way, which
  * in this case is that a JSON representation can be generated for structured logging.
  */
-sealed trait DecodeFailure extends Throwable { self =>
+sealed trait DecodeFailure extends Throwable {
+  self =>
 
   def location: String
+
   def message: String
 
-  def asJson: Json = self match {
-    case f @ EmptyMineralString => f.asJson
-    case f @ UnmatchedMineralString(_) => f.asJson
-    case f @ UnexpectedRowLength(_, _, _) => f.asJson
-    case f @ QuantityParseFailure(_) => f.asJson
-    case f @ QuantityRangeFailure(_) => f.asJson
+  def asJsonString: String = self match {
+
+    case f@EmptyMineralString => f.asJson.noSpaces
+    case f@UnmatchedMineralString(_) => f.asJson.noSpaces
+    case f@UnexpectedRowLength(_, _, _) => f.asJson.noSpaces
+    case f@QuantityParseFailure(_) => f.asJson.noSpaces
+    case f@QuantityRangeFailure(_) => f.asJson.noSpaces
   }
 }
 
@@ -30,7 +35,6 @@ case class UnmatchedMineralString(s: String) extends DecodeFailure {
   override val location = "Mineral field"
   override val message = "Must match a known mineral"
 }
-
 
 
 case class UnexpectedRowLength(row: String, actualLength: Int, expectedLength: Int) extends DecodeFailure {
