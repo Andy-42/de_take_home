@@ -2,7 +2,6 @@ package andy42.de
 
 sealed trait Mineral
 
-
 case object Chromium extends Mineral {
   override def toString: String = "Chromium"
 }

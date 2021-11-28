@@ -1,7 +1,7 @@
 package andy42.de.decode
 
-import andy42.de.summary.MineralSummary
 import andy42.de._
+import andy42.de.summary.MineralSummary
 import zio._
 
 import java.util.Locale
