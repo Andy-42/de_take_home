@@ -17,7 +17,12 @@ libraryDependencies ++= Seq(
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
-  "io.circe" %% "circe-parser" % circeVersion
+  "io.circe" %% "circe-parser" % circeVersion,
+
+  "org.scalatest" %% "scalatest" % "3.2.10" % Test,
+  "org.typelevel" %% "cats-laws" % "2.7.0" % Test,
+  "dev.zio" %% "zio-test" % zioVersion % Test,
+  "dev.zio" %% "zio-test-sbt" % zioVersion % Test
 )
 
 scalacOptions ++= Seq(

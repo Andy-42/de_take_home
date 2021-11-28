@@ -38,7 +38,7 @@ case class UnexpectedRowLength(row: String, actualLength: Int, expectedLength: I
   override val message: String = "Wrong row length"
 }
 
-case class QuantityParseFailure(cell: String) extends DecodeFailure {
+case class QuantityParseFailure(text: String) extends DecodeFailure {
   override val location: String = "Quantity field"
   override val message: String = "Quantity text is not a valid long integer"
 }

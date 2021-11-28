@@ -37,7 +37,7 @@ case class RowDecoderLive() extends RowDecoder {
 
   def quantityFromText(quantityText: String): IO[DecodeFailure, Quantity] =
     for {
-      n <- ZIO.fromTry(Try(quantityText.toLong))
+      n <- ZIO.fromTry(Try(quantityText.trim.toLong))
         .orElse(ZIO.fail(QuantityParseFailure(quantityText)))
 
       quantity <- if (n > 0) ZIO.succeed(n) else ZIO.fail(QuantityRangeFailure(n))

@@ -35,6 +35,9 @@ object Mission1 extends zio.App {
       .fromFile(inputFile)
       .transduce(utf8Decode >>> splitLines)
 
+      // TODO: Drop header row
+      // TODO: Why is failure on header row not reported?
+
       .mapM {
         decodeRowToMineralSummary(_)
           .foldM(

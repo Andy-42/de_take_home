@@ -22,7 +22,7 @@ object MineralSummary {
     Map(mineral -> quantity)
   }
 
-  implicit def mineralSummaryMonoid: Monoid[MineralSummary] =
+  implicit val mineralSummaryMonoid: Monoid[MineralSummary] =
     new Monoid[MineralSummary] {
 
       override val empty: MineralSummary = Map.empty
