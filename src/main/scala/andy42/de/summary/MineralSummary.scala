@@ -22,6 +22,11 @@ object MineralSummary {
     Map(mineral -> quantity)
   }
 
+  def apply(mineralSummaryPairs: List[(Mineral, Quantity)]): MineralSummary = {
+    require(mineralSummaryPairs.forall(_._2 > 0))
+    Map(mineralSummaryPairs:_*)
+  }
+
   implicit val mineralSummaryMonoid: Monoid[MineralSummary] =
     new Monoid[MineralSummary] {
 

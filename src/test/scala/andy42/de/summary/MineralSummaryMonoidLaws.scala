@@ -1,6 +1,6 @@
 package andy42.de.summary
 
-import andy42.de.{Chromium, Gold, MineralSummary, Titanium}
+import andy42.de.{Chromium, Gold, Mineral, MineralSummary, Quantity, Titanium}
 import cats.kernel.laws.discipline.MonoidTests
 import org.scalacheck.Test.Parameters
 import org.scalacheck.{Arbitrary, Gen}
@@ -8,15 +8,22 @@ import org.scalatest.funspec.AnyFunSpec
 
 class MineralSummaryMonoidLaws extends AnyFunSpec {
 
-  // Generate MineralSummary values
-  // TODO: Have variants for 0..3 keys - this generator only has the 1 case
-  implicit val randomMineralSummary: Arbitrary[MineralSummary] =
-  Arbitrary(
+  val genMineral: Gen[Mineral] = Gen.oneOf(Gold, Chromium, Titanium)
+  val genQuantity: Gen[Int] = Gen.chooseNum(1, 1000000)
+
+  val genMineralQuantity: Gen[(Mineral, Quantity)] =
     for {
-      mineral <- Gen.oneOf(Gold, Chromium, Titanium)
-      quantity <- Gen.chooseNum(minT = 1, maxT = 1000000, specials = 1)
-    } yield MineralSummary(mineral, quantity)
-  )
+    mineral <- genMineral
+    quantity <- genQuantity
+  } yield mineral -> quantity.asInstanceOf[Quantity]
+
+   val genMineralSummary: Gen[MineralSummary] =
+    for {
+      n <- Gen.chooseNum(0, 3)
+      pairs <- Gen.listOfN(n, genMineralQuantity)
+  } yield MineralSummary(pairs)
+
+  implicit val randomMineralSummary = Arbitrary(genMineralSummary)
 
   import MineralSummary.mineralSummaryMonoid
 
