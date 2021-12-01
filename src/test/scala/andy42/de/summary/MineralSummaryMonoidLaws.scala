@@ -23,7 +23,7 @@ class MineralSummaryMonoidLaws extends AnyFunSpec {
       pairs <- Gen.listOfN(n, genMineralQuantity)
   } yield MineralSummary(pairs)
 
-  implicit val randomMineralSummary = Arbitrary(genMineralSummary)
+  implicit val randomMineralSummary: Arbitrary[MineralSummary] = Arbitrary(genMineralSummary)
 
   import MineralSummary.mineralSummaryMonoid
 
